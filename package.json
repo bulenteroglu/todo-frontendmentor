@@ -1,0 +1,8 @@
+{
+  "name": "todo-frontendmentor",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/bulenteroglu/todo-frontendmentor.git",
+  "author": "Bulent <eroglu.bulent98@gmail.com>",
+  "license": "MIT"
+}
