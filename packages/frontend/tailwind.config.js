@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'check-blue': 'hsl(192, 100%, 67%)',
-        'check-purple': 'hsl(280, 87%, 65%)',
+        'check-blue': '#57ddff',
+        'check-purple': '#c058f3',
       },
     },
   },
