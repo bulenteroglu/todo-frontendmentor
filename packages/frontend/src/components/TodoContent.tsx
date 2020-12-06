@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 
 function AddTodo() {
@@ -31,7 +31,11 @@ function Todo({ todo }: { todo: any }) {
             done && "bg-gradient-to-br from-check-blue to-check-purple"
           )}
         ></div>
-        <div className='ml-5'>{todo.title}</div>
+        <div
+          className={clsx("ml-5 text-lg", done && "line-through text-gray-300")}
+        >
+          {todo.title}
+        </div>
       </div>
     </div>
   );
@@ -43,13 +47,24 @@ function Todos() {
     { title: "Complete the online JavaScript", checked: false },
   ];
 
+  function handleTodoCount() {
+    let amountOfTodo = todos.length;
+    let amountOfTrue = todos.filter((todo) => todo.checked).length;
+
+    return amountOfTodo - amountOfTrue;
+  }
+
   return (
     <div className='mt-4 w-full flex flex-col bg-white rounded'>
       {todos.map((todo, i) => (
         <Todo key={i} todo={todo} />
       ))}
-      <div className='flex items-center text-xs px-4 py-5 font-bold text-gray-300'>
-        <div className='w-1/3'>5 items left</div>
+      <div className='flex items-center  px-4 py-5 font-bold text-gray-300'>
+        <div className='w-1/3'>
+          {handleTodoCount() < 2
+            ? handleTodoCount() + " Item left"
+            : handleTodoCount() + " Items left"}
+        </div>
         <div className='w-1/3 flex items-center justify-between'>
           <div>All</div>
           <div>Active</div>

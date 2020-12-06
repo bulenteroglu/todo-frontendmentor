@@ -4,7 +4,7 @@ import Header from "./components/Header";
 
 export default function App() {
   return (
-    <div className='h-screen'>
+    <div className='h-screen font-sans'>
       <Header />
       <div className='mx-auto container absolute top-0'>
         <div className='flex justify-center w-screen'>

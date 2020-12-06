@@ -7,6 +7,9 @@ module.exports = {
         'check-blue': '#57ddff',
         'check-purple': '#c058f3',
       },
+      fontFamily: {
+        'body': ["Josefin Sans"],
+      },
     },
   },
   variants: {
