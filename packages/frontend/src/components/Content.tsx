@@ -1,8 +1,9 @@
 import React from "react";
+import TodoContent from "./TodoContent";
 
 export default function Content() {
   return (
-    <div style={{ width: "35rem" }} className='mt-12'>
+    <div style={{ width: "35rem" }} className='mt-20 flex flex-col'>
       <div className='flex items-center justify-between'>
         <div>
           <h1 className='text-3xl text-white font-bold tracking-widest'>
@@ -18,6 +19,9 @@ export default function Content() {
             />
           </svg>
         </div>
+      </div>
+      <div className='mt-8'>
+        <TodoContent />
       </div>
     </div>
   );
