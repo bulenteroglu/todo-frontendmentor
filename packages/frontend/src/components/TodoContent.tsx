@@ -7,8 +7,15 @@ function AddTodo({ setTodos }: { setTodos: any }) {
   const [input, setInput] = useState("");
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setTodos((prev: any) => [...prev, { title: input, checked: done }]);
-    setInput("");
+
+    if (!(input.length < 1)) {
+      setTodos((prev: any) => [
+        ...prev,
+        { id: Date.now(), title: input, checked: done },
+      ]);
+      setInput("");
+      setDone(false);
+    }
   }
 
   return (
@@ -34,10 +41,25 @@ function AddTodo({ setTodos }: { setTodos: any }) {
   );
 }
 
-function Todo({ todo }: { todo: any }) {
+function Todo({
+  todo,
+  setTodos,
+  todos,
+}: {
+  todo: any;
+  setTodos: any;
+  todos: any;
+}) {
   const [done, setDone] = useState(todo.checked);
 
+  let id = todo.id;
+
   const handleClick = () => {
+    setTodos(
+      todos.map((todo: any) =>
+        todo.id === id ? { ...todo, checked: !todo.checked } : todo
+      )
+    );
     setDone(!done);
   };
 
@@ -61,7 +83,7 @@ function Todo({ todo }: { todo: any }) {
   );
 }
 
-function Todos({ todos }: { todos: any }) {
+function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
   function handleTodoCount() {
     let amountOfTodo = todos.length;
     let amountOfTrue = todos.filter((todo: any) => todo.checked).length;
@@ -72,7 +94,7 @@ function Todos({ todos }: { todos: any }) {
   return (
     <div className='mt-4 w-full flex flex-col bg-white rounded'>
       {todos.map((todo: any, i: number) => (
-        <Todo key={i} todo={todo} />
+        <Todo key={i} todo={todo} setTodos={setTodos} todos={todos} />
       ))}
       <div className='flex items-center  px-4 py-5 font-bold text-gray-300'>
         <div className='w-1/3'>
@@ -94,14 +116,12 @@ function Todos({ todos }: { todos: any }) {
 export default function TodoContent() {
   const [todos, setTodos] = useState([]);
 
-  // const todos = [
-  //   { title: "Complete the online JavaScript", checked: false },
-  //   { title: "Complete the online JavaScript", checked: false },
-  // ];
+  console.log(todos);
+
   return (
     <div className='shadow-2xl'>
       <AddTodo setTodos={setTodos} />
-      <Todos todos={todos} />
+      <Todos todos={todos} setTodos={setTodos} />
     </div>
   );
 }
