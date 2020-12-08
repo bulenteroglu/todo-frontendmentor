@@ -50,7 +50,7 @@ function Todo({
   setTodos: any;
   todos: any;
 }) {
-  const [done, setDone] = useState(todo.checked);
+  const [done, setDone] = useState(false);
   const [hover, setHover] = useState(false);
 
   let id = todo.id;
@@ -111,7 +111,17 @@ function Todo({
   );
 }
 
-function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
+function Todos({
+  todos,
+  setTodos,
+  setFiltered,
+  filtered,
+}: {
+  todos: any;
+  setTodos: any;
+  setFiltered: any;
+  filtered: any;
+}) {
   const [active, setActive] = useState("All");
 
   function handleTodoCount() {
@@ -121,13 +131,42 @@ function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
     return amountOfTodo - amountOfTrue;
   }
 
-  console.log(active);
+  useEffect(() => {
+    switch (active) {
+      case "All":
+        setFiltered(todos);
+        break;
+      case "Active":
+        setFiltered(todos.filter((todo: any) => todo.checked === false));
+        break;
+      case "Completed":
+        setFiltered(todos.filter((todo: any) => todo.checked === true));
+        break;
+      default:
+        break;
+    }
+  }, [active]);
 
   return (
     <div className='mt-4 w-full flex flex-col rounded shadow-xl bg-white'>
-      {todos.map((todo: any, i: number) => (
-        <Todo key={i} todo={todo} setTodos={setTodos} todos={todos} />
-      ))}
+      {active === "All"
+        ? todos.map((todo: any, i: number) => (
+            <Todo key={i} todo={todo} setTodos={setTodos} todos={todos} />
+          ))
+        : active === "Active"
+        ? todos.map(
+            (todo: any, i: number) =>
+              !todo.checked && (
+                <Todo key={i} todo={todo} setTodos={setTodos} todos={todos} />
+              )
+          )
+        : active === "Completed" &&
+          todos.map(
+            (todo: any, i: number) =>
+              todo.checked && (
+                <Todo key={i} todo={todo} setTodos={setTodos} todos={todos} />
+              )
+          )}
       <div className='flex items-center px-4 py-3 font-bold text-xs text-gray-300'>
         <div className='w-1/3'>
           {handleTodoCount() < 2
@@ -137,19 +176,28 @@ function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
         <div className='w-1/3 flex items-center justify-between'>
           <div
             onClick={() => setActive("All")}
-            className={clsx(active === "All" && "text-blue-500")}
+            className={clsx(
+              "cursor-pointer",
+              active === "All" && "text-blue-500"
+            )}
           >
             All
           </div>
           <div
             onClick={() => setActive("Active")}
-            className={clsx(active === "Active" && "text-blue-500")}
+            className={clsx(
+              "cursor-pointer",
+              active === "Active" && "text-blue-500"
+            )}
           >
             Active
           </div>
           <div
             onClick={() => setActive("Completed")}
-            className={clsx(active === "Completed" && "text-blue-500")}
+            className={clsx(
+              "cursor-pointer",
+              active === "Completed" && "text-blue-500"
+            )}
           >
             Completed
           </div>
@@ -162,11 +210,17 @@ function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
 
 export default function TodoContent() {
   const [todos, setTodos] = useState([]);
+  const [filtered, setFiltered] = useState([]);
 
   return (
     <div>
       <AddTodo setTodos={setTodos} />
-      <Todos todos={todos} setTodos={setTodos} />
+      <Todos
+        todos={todos}
+        setTodos={setTodos}
+        setFiltered={setFiltered}
+        filtered={filtered}
+      />
     </div>
   );
 }
