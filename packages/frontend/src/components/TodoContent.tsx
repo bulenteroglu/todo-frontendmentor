@@ -21,7 +21,7 @@ function AddTodo({ setTodos }: { setTodos: any }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className='w-full flex items-center bg-white py-5 px-2 shadow-sm rounded-sm'
+      className='w-full flex items-center bg-white py-4 px-2 shadow-sm rounded-sm'
     >
       <div
         onClick={() => setDone(!done)}
@@ -51,6 +51,7 @@ function Todo({
   todos: any;
 }) {
   const [done, setDone] = useState(todo.checked);
+  const [hover, setHover] = useState(false);
 
   let id = todo.id;
 
@@ -69,7 +70,11 @@ function Todo({
 
   return (
     <div className='border-b py-5'>
-      <div className='flex items-center px-2'>
+      <div
+        className='flex items-center px-2'
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+      >
         <div
           onClick={() => handleClick()}
           className={clsx(
@@ -81,30 +86,34 @@ function Todo({
           onClick={() => handleClick()}
           className={clsx(
             "ml-5 text-lg cursor-pointer",
-            done && "line-through text-gray-300"
+            done && "line-through text-gray-400"
           )}
         >
           {todo.title}
         </div>
-        <svg
-          onClick={() => handleDelete()}
-          className='ml-auto mr-4 cursor-pointer'
-          xmlns='http://www.w3.org/2000/svg'
-          width='18'
-          height='18'
-        >
-          <path
-            fill='#494C6B'
-            fillRule='evenodd'
-            d='M16.97 0l.708.707L9.546 8.84l8.132 8.132-.707.707-8.132-8.132-8.132 8.132L0 16.97l8.132-8.132L0 .707.707 0 8.84 8.132 16.971 0z'
-          />
-        </svg>
+        {hover && (
+          <svg
+            onClick={() => handleDelete()}
+            className='ml-auto mr-4 cursor-pointer'
+            xmlns='http://www.w3.org/2000/svg'
+            width='18'
+            height='18'
+          >
+            <path
+              fill='#494C6B'
+              fillRule='evenodd'
+              d='M16.97 0l.708.707L9.546 8.84l8.132 8.132-.707.707-8.132-8.132-8.132 8.132L0 16.97l8.132-8.132L0 .707.707 0 8.84 8.132 16.971 0z'
+            />
+          </svg>
+        )}
       </div>
     </div>
   );
 }
 
 function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
+  const [active, setActive] = useState("All");
+
   function handleTodoCount() {
     let amountOfTodo = todos.length;
     let amountOfTrue = todos.filter((todo: any) => todo.checked).length;
@@ -112,21 +121,38 @@ function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
     return amountOfTodo - amountOfTrue;
   }
 
+  console.log(active);
+
   return (
-    <div className='mt-4 w-full flex flex-col bg-white rounded'>
+    <div className='mt-4 w-full flex flex-col rounded shadow-xl bg-white'>
       {todos.map((todo: any, i: number) => (
         <Todo key={i} todo={todo} setTodos={setTodos} todos={todos} />
       ))}
-      <div className='flex items-center  px-4 py-5 font-bold text-gray-300'>
+      <div className='flex items-center px-4 py-3 font-bold text-xs text-gray-300'>
         <div className='w-1/3'>
           {handleTodoCount() < 2
             ? handleTodoCount() + " Item left"
             : handleTodoCount() + " Items left"}
         </div>
         <div className='w-1/3 flex items-center justify-between'>
-          <div onClick={() => {}}>All</div>
-          <div onClick={() => {}}>Active</div>
-          <div onClick={() => {}}>Completed</div>
+          <div
+            onClick={() => setActive("All")}
+            className={clsx(active === "All" && "text-blue-500")}
+          >
+            All
+          </div>
+          <div
+            onClick={() => setActive("Active")}
+            className={clsx(active === "Active" && "text-blue-500")}
+          >
+            Active
+          </div>
+          <div
+            onClick={() => setActive("Completed")}
+            className={clsx(active === "Completed" && "text-blue-500")}
+          >
+            Completed
+          </div>
         </div>
         <div className='w-1/3 text-right'>Clear Completed</div>
       </div>
@@ -137,10 +163,8 @@ function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
 export default function TodoContent() {
   const [todos, setTodos] = useState([]);
 
-  console.log(todos);
-
   return (
-    <div className='shadow-2xl'>
+    <div>
       <AddTodo setTodos={setTodos} />
       <Todos todos={todos} setTodos={setTodos} />
     </div>
