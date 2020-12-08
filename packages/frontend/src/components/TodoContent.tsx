@@ -63,6 +63,10 @@ function Todo({
     setDone(!done);
   };
 
+  function handleDelete() {
+    setTodos(todos.filter((todo: any) => todo.id !== id));
+  }
+
   return (
     <div className='border-b py-5'>
       <div className='flex items-center px-2'>
@@ -74,10 +78,27 @@ function Todo({
           )}
         ></div>
         <div
-          className={clsx("ml-5 text-lg", done && "line-through text-gray-300")}
+          onClick={() => handleClick()}
+          className={clsx(
+            "ml-5 text-lg cursor-pointer",
+            done && "line-through text-gray-300"
+          )}
         >
           {todo.title}
         </div>
+        <svg
+          onClick={() => handleDelete()}
+          className='ml-auto mr-4 cursor-pointer'
+          xmlns='http://www.w3.org/2000/svg'
+          width='18'
+          height='18'
+        >
+          <path
+            fill='#494C6B'
+            fillRule='evenodd'
+            d='M16.97 0l.708.707L9.546 8.84l8.132 8.132-.707.707-8.132-8.132-8.132 8.132L0 16.97l8.132-8.132L0 .707.707 0 8.84 8.132 16.971 0z'
+          />
+        </svg>
       </div>
     </div>
   );
@@ -103,9 +124,9 @@ function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
             : handleTodoCount() + " Items left"}
         </div>
         <div className='w-1/3 flex items-center justify-between'>
-          <div>All</div>
-          <div>Active</div>
-          <div>Completed</div>
+          <div onClick={() => {}}>All</div>
+          <div onClick={() => {}}>Active</div>
+          <div onClick={() => {}}>Completed</div>
         </div>
         <div className='w-1/3 text-right'>Clear Completed</div>
       </div>
