@@ -26,14 +26,23 @@ function AddTodo({ setTodos }: { setTodos: any }) {
       <div
         onClick={() => setDone(!done)}
         className={clsx(
-          "ml-4 rounded-full border h-6 w-6 cursor-pointer bg-white",
+          "ml-4 rounded-full border h-6 w-6 cursor-pointer bg-white flex items-center justify-center",
           done && "bg-gradient-to-br from-check-blue to-check-purple"
         )}
-      ></div>
+      >
+        <svg xmlns='http://www.w3.org/2000/svg' width='11' height='9'>
+          <path
+            fill='none'
+            stroke='#FFF'
+            stroke-width='2'
+            d='M1 4.304L3.696 7l6-6'
+          />
+        </svg>
+      </div>
       <input
         onChange={(e) => setInput(e.target.value)}
         value={input}
-        className='focus:outline-none w-full ml-5'
+        className='focus:outline-none w-64 ml-5'
         type='text'
         placeholder='Create a new todo...'
       />
@@ -78,10 +87,19 @@ function Todo({
         <div
           onClick={() => handleClick()}
           className={clsx(
-            "ml-4 rounded-full border h-6 w-6 cursor-pointer bg-white",
+            "ml-4 rounded-full border h-6 w-6 cursor-pointer bg-white flex items-center justify-center",
             done && "bg-gradient-to-br from-check-blue to-check-purple"
           )}
-        ></div>
+        >
+          <svg xmlns='http://www.w3.org/2000/svg' width='11' height='9'>
+            <path
+              fill='none'
+              stroke='#FFF'
+              stroke-width='2'
+              d='M1 4.304L3.696 7l6-6'
+            />
+          </svg>
+        </div>
         <div
           onClick={() => handleClick()}
           className={clsx(
