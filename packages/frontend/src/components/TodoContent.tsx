@@ -50,7 +50,7 @@ function Todo({
   setTodos: any;
   todos: any;
 }) {
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState(todo.checked);
   const [hover, setHover] = useState(false);
 
   let id = todo.id;
@@ -111,17 +111,7 @@ function Todo({
   );
 }
 
-function Todos({
-  todos,
-  setTodos,
-  setFiltered,
-  filtered,
-}: {
-  todos: any;
-  setTodos: any;
-  setFiltered: any;
-  filtered: any;
-}) {
+function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
   const [active, setActive] = useState("All");
 
   function handleTodoCount() {
@@ -130,22 +120,6 @@ function Todos({
 
     return amountOfTodo - amountOfTrue;
   }
-
-  useEffect(() => {
-    switch (active) {
-      case "All":
-        setFiltered(todos);
-        break;
-      case "Active":
-        setFiltered(todos.filter((todo: any) => todo.checked === false));
-        break;
-      case "Completed":
-        setFiltered(todos.filter((todo: any) => todo.checked === true));
-        break;
-      default:
-        break;
-    }
-  }, [active]);
 
   return (
     <div className='mt-4 w-full flex flex-col rounded shadow-xl bg-white'>
@@ -167,13 +141,13 @@ function Todos({
                 <Todo key={i} todo={todo} setTodos={setTodos} todos={todos} />
               )
           )}
-      <div className='flex items-center px-4 py-3 font-bold text-xs text-gray-300'>
-        <div className='w-1/3'>
+      <div className='flex items-center px-4 py-3 font-bold text-xs text-gray-300 justify-between'>
+        <div className=''>
           {handleTodoCount() < 2
             ? handleTodoCount() + " Item left"
             : handleTodoCount() + " Items left"}
         </div>
-        <div className='w-1/3 flex items-center justify-between'>
+        <div className='flex items-center space-x-4'>
           <div
             onClick={() => setActive("All")}
             className={clsx(
@@ -202,7 +176,7 @@ function Todos({
             Completed
           </div>
         </div>
-        <div className='w-1/3 text-right'>Clear Completed</div>
+        <div className=' text-right'>Clear Completed</div>
       </div>
     </div>
   );
@@ -215,12 +189,7 @@ export default function TodoContent() {
   return (
     <div>
       <AddTodo setTodos={setTodos} />
-      <Todos
-        todos={todos}
-        setTodos={setTodos}
-        setFiltered={setFiltered}
-        filtered={filtered}
-      />
+      <Todos todos={todos} setTodos={setTodos} />
     </div>
   );
 }
