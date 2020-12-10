@@ -150,24 +150,32 @@ function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
 
   return (
     <div className='mt-4 w-full flex flex-col rounded shadow-xl bg-white'>
-      {active === "All"
-        ? todos.map((todo: any, i: number) => (
+      {todos.length > 0 ? (
+        active === "All" ? (
+          todos.map((todo: any, i: number) => (
             <Todo key={i} todo={todo} setTodos={setTodos} todos={todos} />
           ))
-        : active === "Active"
-        ? todos.map(
+        ) : active === "Active" ? (
+          todos.map(
             (todo: any, i: number) =>
               !todo.checked && (
                 <Todo key={i} todo={todo} setTodos={setTodos} todos={todos} />
               )
           )
-        : active === "Completed" &&
+        ) : (
+          active === "Completed" &&
           todos.map(
             (todo: any, i: number) =>
               todo.checked && (
                 <Todo key={i} todo={todo} setTodos={setTodos} todos={todos} />
               )
-          )}
+          )
+        )
+      ) : (
+        <div className='flex justify-center py-2 border-b italic text-xs font-bold'>
+          Enter a todo...
+        </div>
+      )}
       <div className='flex items-center px-4 py-3 font-bold text-xs text-gray-300 justify-between'>
         <div className=''>
           {handleTodoCount() < 2
