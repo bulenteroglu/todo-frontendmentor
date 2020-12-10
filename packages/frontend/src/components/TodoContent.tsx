@@ -21,28 +21,30 @@ function AddTodo({ setTodos }: { setTodos: any }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className='w-full flex items-center bg-white py-4 px-2 shadow-sm rounded-sm'
+      className='w-full flex items-center bg-white dark:bg-gray-800 py-4 px-2 shadow-sm rounded-md'
     >
       <div
         onClick={() => setDone(!done)}
         className={clsx(
-          "ml-4 rounded-full border h-6 w-6 cursor-pointer bg-white flex items-center justify-center",
+          "ml-4 rounded-full border h-6 w-6 cursor-pointer bg-white dark:bg-gray-800 flex items-center justify-center",
           done && "bg-gradient-to-br from-check-blue to-check-purple"
         )}
       >
-        <svg xmlns='http://www.w3.org/2000/svg' width='11' height='9'>
-          <path
-            fill='none'
-            stroke='#FFF'
-            strokeWidth='2'
-            d='M1 4.304L3.696 7l6-6'
-          />
-        </svg>
+        {done && (
+          <svg xmlns='http://www.w3.org/2000/svg' width='11' height='9'>
+            <path
+              fill='none'
+              stroke='#FFF'
+              strokeWidth='2'
+              d='M1 4.304L3.696 7l6-6'
+            />
+          </svg>
+        )}
       </div>
       <input
         onChange={(e) => setInput(e.target.value)}
         value={input}
-        className='focus:outline-none w-64 ml-5'
+        className='focus:outline-none w-64 ml-5 dark:bg-gray-800 dark:text-gray-400'
         type='text'
         placeholder='Create a new todo...'
       />
@@ -149,7 +151,7 @@ function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
   }
 
   return (
-    <div className='mt-4 w-full flex flex-col rounded shadow-xl bg-white'>
+    <div className='mt-4 w-full flex flex-col rounded shadow-xl bg-white dark:bg-gray-800 dark:text-gray-400'>
       {todos.length > 0 ? (
         active === "All" ? (
           todos.map((todo: any, i: number) => (
@@ -172,7 +174,7 @@ function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
           )
         )
       ) : (
-        <div className='flex justify-center py-2 border-b italic text-xs font-bold'>
+        <div className='flex justify-center py-2 border-b dark:border-gray-600 dark:text-gray-400 italic text-xs font-bold'>
           Enter a todo...
         </div>
       )}
