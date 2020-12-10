@@ -34,7 +34,7 @@ function AddTodo({ setTodos }: { setTodos: any }) {
           <path
             fill='none'
             stroke='#FFF'
-            stroke-width='2'
+            strokeWidth='2'
             d='M1 4.304L3.696 7l6-6'
           />
         </svg>
@@ -77,6 +77,10 @@ function Todo({
     setTodos(todos.filter((todo: any) => todo.id !== id));
   }
 
+  useEffect(() => {
+    setDone(todo.checked);
+  }, [todos]);
+
   return (
     <div className='border-b py-5'>
       <div
@@ -95,7 +99,7 @@ function Todo({
             <path
               fill='none'
               stroke='#FFF'
-              stroke-width='2'
+              strokeWidth='2'
               d='M1 4.304L3.696 7l6-6'
             />
           </svg>
@@ -137,6 +141,11 @@ function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
     let amountOfTrue = todos.filter((todo: any) => todo.checked).length;
 
     return amountOfTodo - amountOfTrue;
+  }
+
+  function handleClear() {
+    let filterTest = todos.filter((todo: any) => !todo.checked);
+    setTodos(filterTest);
   }
 
   return (
@@ -194,7 +203,9 @@ function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
             Completed
           </div>
         </div>
-        <div className=' text-right'>Clear Completed</div>
+        <div className='text-right' onClick={handleClear}>
+          Clear Completed
+        </div>
       </div>
     </div>
   );
@@ -202,7 +213,6 @@ function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
 
 export default function TodoContent() {
   const [todos, setTodos] = useState([]);
-  const [filtered, setFiltered] = useState([]);
 
   return (
     <div>
