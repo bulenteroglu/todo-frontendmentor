@@ -3,7 +3,7 @@ import Content from "./components/Content";
 import Header from "./components/Header";
 
 export default function App() {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(true);
 
   useEffect(() => {
     if (dark) {

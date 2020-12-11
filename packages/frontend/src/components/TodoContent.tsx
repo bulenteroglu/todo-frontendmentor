@@ -3,8 +3,9 @@ import clsx from "clsx";
 
 function AddTodo({ setTodos }: { setTodos: any }) {
   const [done, setDone] = useState(false);
-
   const [input, setInput] = useState("");
+  const [hoverCheck, setHoverCheck] = useState(false);
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -24,22 +25,32 @@ function AddTodo({ setTodos }: { setTodos: any }) {
       className='w-full flex items-center bg-white dark:bg-gray-800 py-4 px-2 shadow-sm rounded-md'
     >
       <div
-        onClick={() => setDone(!done)}
+        onMouseEnter={() => setHoverCheck(true)}
+        onMouseLeave={() => setHoverCheck(false)}
         className={clsx(
-          "ml-4 rounded-full border h-6 w-6 cursor-pointer bg-white dark:bg-gray-800 flex items-center justify-center",
-          done && "bg-gradient-to-br from-check-blue to-check-purple"
+          "ml-4 p-1 rounded-full cursor-pointer",
+          hoverCheck && "bg-gradient-to-br from-check-blue to-check-purple",
+          !hoverCheck && "border border-gray-700"
         )}
+        onClick={() => setDone(!done)}
       >
-        {done && (
-          <svg xmlns='http://www.w3.org/2000/svg' width='11' height='9'>
-            <path
-              fill='none'
-              stroke='#FFF'
-              strokeWidth='2'
-              d='M1 4.304L3.696 7l6-6'
-            />
-          </svg>
-        )}
+        <div
+          className={clsx(
+            "flex justify-center items-center rounded-full  bg-white dark:bg-gray-800 h-5 w-5",
+            done && "bg-gradient-to-br from-check-blue to-check-purple"
+          )}
+        >
+          {done && (
+            <svg xmlns='http://www.w3.org/2000/svg' width='11' height='9'>
+              <path
+                fill='none'
+                stroke='#FFF'
+                strokeWidth='2'
+                d='M1 4.304L3.696 7l6-6'
+              />
+            </svg>
+          )}
+        </div>
       </div>
       <input
         onChange={(e) => setInput(e.target.value)}
@@ -63,6 +74,7 @@ function Todo({
 }) {
   const [done, setDone] = useState(todo.checked);
   const [hover, setHover] = useState(false);
+  const [hoverCheck, setHoverCheck] = useState(false);
 
   let id = todo.id;
 
@@ -91,20 +103,32 @@ function Todo({
         onMouseLeave={() => setHover(false)}
       >
         <div
-          onClick={() => handleClick()}
+          onMouseEnter={() => setHoverCheck(true)}
+          onMouseLeave={() => setHoverCheck(false)}
           className={clsx(
-            "ml-4 rounded-full border h-6 w-6 cursor-pointer bg-white flex items-center justify-center",
-            done && "bg-gradient-to-br from-check-blue to-check-purple"
+            "ml-4 p-1 rounded-full cursor-pointer",
+            hoverCheck && "bg-gradient-to-br from-check-blue to-check-purple",
+            !hoverCheck && "border border-gray-700"
           )}
+          onClick={() => handleClick()}
         >
-          <svg xmlns='http://www.w3.org/2000/svg' width='11' height='9'>
-            <path
-              fill='none'
-              stroke='#FFF'
-              strokeWidth='2'
-              d='M1 4.304L3.696 7l6-6'
-            />
-          </svg>
+          <div
+            className={clsx(
+              "flex justify-center items-center rounded-full  bg-white dark:bg-gray-800 h-5 w-5",
+              done && "bg-gradient-to-br from-check-blue to-check-purple"
+            )}
+          >
+            {done && (
+              <svg xmlns='http://www.w3.org/2000/svg' width='11' height='9'>
+                <path
+                  fill='none'
+                  stroke='#FFF'
+                  strokeWidth='2'
+                  d='M1 4.304L3.696 7l6-6'
+                />
+              </svg>
+            )}
+          </div>
         </div>
         <div
           onClick={() => handleClick()}
@@ -222,7 +246,9 @@ function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
 }
 
 export default function TodoContent() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState([
+    { id: Date.now(), title: "ass", checked: false },
+  ]);
 
   return (
     <div>
