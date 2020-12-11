@@ -86,7 +86,7 @@ function Todo({
   }, [todos]);
 
   return (
-    <div className='border-b py-5'>
+    <div className='border-b dark:border-gray-600 py-5'>
       <div
         className='flex items-center px-2'
         onMouseEnter={() => setHover(true)}
@@ -165,10 +165,15 @@ function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
   }
 
   return (
-    <div className='mt-4 w-full flex flex-col rounded shadow-xl bg-white dark:bg-gray-800 dark:text-gray-400'>
+    <div className='mt-4 w-full flex flex-col rounded-md shadow-xl bg-white dark:bg-gray-800 dark:text-gray-400'>
       {todos.length > 0 ? (
         active === "All" ? (
-          <ReactSortable animation={200} list={todos} setList={setTodos}>
+          <ReactSortable
+            delay={2}
+            animation={200}
+            list={todos}
+            setList={setTodos}
+          >
             {todos.map((todo: any, i: number) => (
               <Todo key={i} todo={todo} setTodos={setTodos} todos={todos} />
             ))}
@@ -190,17 +195,17 @@ function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
           )
         )
       ) : (
-        <div className='flex justify-center py-2 border-b dark:border-gray-600 dark:text-gray-400 italic text-xs font-bold'>
-          Enter a todo...
+        <div className='flex items-center justify-center h-52 border-b dark:border-gray-700 dark:text-gray-700 italic text-xs font-bold'>
+          might want to add something?
         </div>
       )}
-      <div className='flex items-center px-4 py-3 font-bold text-xs text-gray-300 justify-between'>
+      <div className='flex items-center px-4 py-3 font-bold text-xs text-gray-300 justify-between dark:text-gray-500'>
         <div className=''>
           {handleTodoCount() < 2
             ? handleTodoCount() + " Item left"
             : handleTodoCount() + " Items left"}
         </div>
-        <div className='flex items-center space-x-4'>
+        <div className='flex items-center space-x-4 '>
           <div
             onClick={() => setActive("All")}
             className={clsx(
@@ -238,14 +243,11 @@ function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
 }
 
 export default function TodoContent() {
-  const [todos, setTodos] = useState([
-    { id: Date.now(), title: "ass", checked: false },
-  ]);
+  const [todos, setTodos] = useState([]);
 
   return (
     <div>
       <AddTodo setTodos={setTodos} />
-
       <Todos todos={todos} setTodos={setTodos} />
     </div>
   );

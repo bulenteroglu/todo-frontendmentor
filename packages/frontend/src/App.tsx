@@ -14,7 +14,7 @@ export default function App() {
   }, [dark]);
 
   return (
-    <div className='h-screen font-sans'>
+    <div className='h-screen font-body'>
       <Header dark={dark} />
       <div className='mx-auto container absolute top-0'>
         <div className='flex justify-center w-screen '>
