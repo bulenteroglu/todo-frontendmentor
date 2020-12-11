@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import clsx from "clsx";
+import { ReactSortable } from "react-sortablejs";
 
 function AddTodo({ setTodos }: { setTodos: any }) {
   const [done, setDone] = useState(false);
   const [input, setInput] = useState("");
-  const [hoverCheck, setHoverCheck] = useState(false);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -25,32 +25,22 @@ function AddTodo({ setTodos }: { setTodos: any }) {
       className='w-full flex items-center bg-white dark:bg-gray-800 py-4 px-2 shadow-sm rounded-md'
     >
       <div
-        onMouseEnter={() => setHoverCheck(true)}
-        onMouseLeave={() => setHoverCheck(false)}
-        className={clsx(
-          "ml-4 p-1 rounded-full cursor-pointer",
-          hoverCheck && "bg-gradient-to-br from-check-blue to-check-purple",
-          !hoverCheck && "border border-gray-700"
-        )}
         onClick={() => setDone(!done)}
+        className={clsx(
+          "ml-4 flex justify-center items-center  bg-white dark:bg-gray-800 border-gradient h-6 w-6",
+          done && "bg-gradient-to-br from-check-blue to-check-purple"
+        )}
       >
-        <div
-          className={clsx(
-            "flex justify-center items-center rounded-full  bg-white dark:bg-gray-800 h-5 w-5",
-            done && "bg-gradient-to-br from-check-blue to-check-purple"
-          )}
-        >
-          {done && (
-            <svg xmlns='http://www.w3.org/2000/svg' width='11' height='9'>
-              <path
-                fill='none'
-                stroke='#FFF'
-                strokeWidth='2'
-                d='M1 4.304L3.696 7l6-6'
-              />
-            </svg>
-          )}
-        </div>
+        {done && (
+          <svg xmlns='http://www.w3.org/2000/svg' width='11' height='9'>
+            <path
+              fill='none'
+              stroke='#FFF'
+              strokeWidth='2'
+              d='M1 4.304L3.696 7l6-6'
+            />
+          </svg>
+        )}
       </div>
       <input
         onChange={(e) => setInput(e.target.value)}
@@ -178,9 +168,11 @@ function Todos({ todos, setTodos }: { todos: any; setTodos: any }) {
     <div className='mt-4 w-full flex flex-col rounded shadow-xl bg-white dark:bg-gray-800 dark:text-gray-400'>
       {todos.length > 0 ? (
         active === "All" ? (
-          todos.map((todo: any, i: number) => (
-            <Todo key={i} todo={todo} setTodos={setTodos} todos={todos} />
-          ))
+          <ReactSortable animation={200} list={todos} setList={setTodos}>
+            {todos.map((todo: any, i: number) => (
+              <Todo key={i} todo={todo} setTodos={setTodos} todos={todos} />
+            ))}
+          </ReactSortable>
         ) : active === "Active" ? (
           todos.map(
             (todo: any, i: number) =>
@@ -253,6 +245,7 @@ export default function TodoContent() {
   return (
     <div>
       <AddTodo setTodos={setTodos} />
+
       <Todos todos={todos} setTodos={setTodos} />
     </div>
   );

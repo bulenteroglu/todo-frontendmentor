@@ -3,3 +3,11 @@
 @tailwind utilities;
 
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap");
+
+/* .border-gradient {
+  border-radius: 9999px;
+  border: 5px solid transparent;
+  padding: 0.5rem;
+  border-image-source: linear-gradient(to bottom right, #57ddff, #c058f3);
+  border-image-slice: 5;
+} */
