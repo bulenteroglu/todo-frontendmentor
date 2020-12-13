@@ -27,7 +27,7 @@ function AddTodo({ setTodos }: { setTodos: any }) {
       <div
         onClick={() => setDone(!done)}
         className={clsx(
-          "ml-4 flex justify-center items-center  bg-white dark:bg-gray-800 border-gradient h-6 w-6",
+          "ml-4 border border-gray-200  rounded-full flex justify-center items-center  bg-white dark:bg-gray-800 dark:border-gray-600 border-gradient h-6 w-6",
           done && "bg-gradient-to-br from-check-blue to-check-purple"
         )}
       >
@@ -64,7 +64,6 @@ function Todo({
 }) {
   const [done, setDone] = useState(todo.checked);
   const [hover, setHover] = useState(false);
-  const [hoverCheck, setHoverCheck] = useState(false);
 
   let id = todo.id;
 
@@ -93,32 +92,22 @@ function Todo({
         onMouseLeave={() => setHover(false)}
       >
         <div
-          onMouseEnter={() => setHoverCheck(true)}
-          onMouseLeave={() => setHoverCheck(false)}
-          className={clsx(
-            "ml-4 p-1 rounded-full cursor-pointer",
-            hoverCheck && "bg-gradient-to-br from-check-blue to-check-purple",
-            !hoverCheck && "border border-gray-700"
-          )}
           onClick={() => handleClick()}
+          className={clsx(
+            "ml-4 border border-gray-200  rounded-full flex justify-center items-center  bg-white dark:bg-gray-800 dark:border-gray-600 border-gradient h-6 w-6",
+            done && "bg-gradient-to-br from-check-blue to-check-purple"
+          )}
         >
-          <div
-            className={clsx(
-              "flex justify-center items-center rounded-full  bg-white dark:bg-gray-800 h-5 w-5",
-              done && "bg-gradient-to-br from-check-blue to-check-purple"
-            )}
-          >
-            {done && (
-              <svg xmlns='http://www.w3.org/2000/svg' width='11' height='9'>
-                <path
-                  fill='none'
-                  stroke='#FFF'
-                  strokeWidth='2'
-                  d='M1 4.304L3.696 7l6-6'
-                />
-              </svg>
-            )}
-          </div>
+          {done && (
+            <svg xmlns='http://www.w3.org/2000/svg' width='11' height='9'>
+              <path
+                fill='none'
+                stroke='#FFF'
+                strokeWidth='2'
+                d='M1 4.304L3.696 7l6-6'
+              />
+            </svg>
+          )}
         </div>
         <div
           onClick={() => handleClick()}
